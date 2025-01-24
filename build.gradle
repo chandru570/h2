@@ -14,19 +14,7 @@ java {
 }
 
 repositories {
-	maven {
-		url = "https://nexus.mgmt-bld.oncp.dev/repository/maven-public/"
-	}
-	maven {
-		url = "https://nexus.mgmt-bld.oncp.dev/repository/maven-central/"
-	}
-	maven {
-		url = "https://nexus.sbs-bld.oncp.dev/repository/sbs-pdt/"
-	}
-	maven {
-		url = "https://nexus.sbs-bld.oncp.dev/repository/shared-services/"
-	}
-	mavenLocal()
+	mavenCentral()
 }
 
 dependencies {
