@@ -3,7 +3,6 @@ package com.example.h2.service;
 import com.example.h2.entity.TestEntity;
 import com.example.h2.repository.TestRepository;
 import org.springframework.http.HttpStatus;
-import org.springframework.http.HttpStatusCode;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 
@@ -21,7 +20,7 @@ public class TestService {
 
     public ResponseEntity<String> readFromH2() {
         List<TestEntity> list = new ArrayList<>();
-        testRepository.findAll().forEach(x -> list.add(x));
+        testRepository.findAll().forEach(list::add);
         return new ResponseEntity<String>(list.toString(), HttpStatus.OK);
     }
 
