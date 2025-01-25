@@ -25,8 +25,12 @@ public class TestService {
         return new ResponseEntity<String>(list.toString(), HttpStatus.OK);
     }
 
-    public ResponseEntity writeToH2() {
-        testRepository.save(new TestEntity("test1", 20, "test1@test.com"));
-        return ResponseEntity.ok("row add success");
+    public ResponseEntity<String> writeToH2() {
+        try {
+            testRepository.save(new TestEntity("test1", 20, "test1@test.com"));
+            return ResponseEntity.ok("row add success");
+        } catch (RuntimeException e) {
+            return new ResponseEntity<>("Failed to add row", HttpStatus.INTERNAL_SERVER_ERROR);
+        }
     }
 }

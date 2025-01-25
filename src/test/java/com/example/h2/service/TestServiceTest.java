@@ -11,6 +11,7 @@ import org.mockito.junit.jupiter.MockitoExtension;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 
+import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 
@@ -55,6 +56,28 @@ public class TestServiceTest {
 
         assertEquals(HttpStatus.OK, response.getStatusCode());
         assertEquals("row add success", response.getBody());
+        verify(testRepository, times(1)).save(any(TestEntity.class));
+    }
+
+    @Test
+    void readFromH2ReturnsEmptyListWhenNoData() {
+        when(testRepository.findAll()).thenReturn(new ArrayList<>());
+
+        ResponseEntity<String> response = testService.readFromH2();
+
+        assertEquals(HttpStatus.OK, response.getStatusCode());
+        assertEquals("[]", response.getBody());
+        verify(testRepository, times(1)).findAll();
+    }
+
+    @Test
+    void writeToH2ReturnsErrorWhenSaveFails() {
+        when(testRepository.save(any(TestEntity.class))).thenThrow(new RuntimeException("Save failed"));
+
+        ResponseEntity<String> response = testService.writeToH2();
+
+        assertEquals(HttpStatus.INTERNAL_SERVER_ERROR, response.getStatusCode());
+        assertEquals("Failed to add row", response.getBody());
         verify(testRepository, times(1)).save(any(TestEntity.class));
     }
 }

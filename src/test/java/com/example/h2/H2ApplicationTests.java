@@ -10,4 +10,9 @@ class H2ApplicationTests {
 	void contextLoads() {
 	}
 
+	@Test
+	void applicationStartsSuccessfully() {
+		H2Application.main(new String[] {});
+	}
+
 }
